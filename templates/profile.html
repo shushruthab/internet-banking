@@ -1,0 +1,21 @@
+{% extends "dashbase.html" %}
+{% block title %}Profile{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="/static/profile.css">
+{% endblock %}
+{% block content %}
+<div class="col s12">
+    <h2><a href="/user/{{ user.username }}" ><i class="dashi medium material-icons">home</i></a> SATOZ BANK <a href="/logout"><i class="medium material-icons dashi">power_settings_new</i></a></h2>
+    <div class="cardcontainer">
+        <div class="info">
+            <div class="name">{{ user.first_name }} {{ user.last_name }}</div>
+            <div class="role">{{ profile.role }} at {{ profile.company }}</div><br>
+            <div class="divider">---</div>
+            <div class="address">{{ profile.address }}</div>
+            <a href="/user/{{ user.username }}/editprofile" class="red waves-effect waves-light btn-large editprof">Edit Profile</a>
+        </div>
+        <div class="avatar"></div>
+    </div>
+
+{% endblock %}

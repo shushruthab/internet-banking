@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="/static/style.css">
+{% endblock %}
+{% block content %}
+<h3 class="welcome-login">Register below to open an account!</h3>
+            
+<form method="POST">
+
+  {{ form.hidden_tag() }}
+  
+  {% for field in form
+    if field.widget.input_type != 'hidden' %}
+    <div class="input-field col s12">
+    {{ field.label }}
+    {{ field(class_="validate") }}
+  </div>
+    {% for error in field.errors %}
+    <span class="form-text text-danger">{{ error }}</span>
+    {% endfor %}
+  
+  {% endfor %}
+
+  <button class="btn" type="submit">Register</button>
+
+</form>
+</div>
+</div>
+{% endblock %}
+

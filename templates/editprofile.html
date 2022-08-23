@@ -1,0 +1,38 @@
+{% extends "dashbase.html" %}
+{% block title %}Edit Profile{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="/static/dashboardstyle.css">
+{% endblock %}
+{% block content %}
+{% include 'header.html' %}
+<div class="col s12 m5 l5">
+  <form method="POST">
+
+    {{ form.hidden_tag() }}
+    
+    {% for field in form
+      if field.widget.input_type != 'hidden' %}
+      <div class="input-field col s12">
+      {{ field.label }}
+      {{ field(class_="validate") }}
+    </div>
+      {% for error in field.errors %}
+      <span class="form-text text-danger">{{ error }}</span>
+      {% endfor %}
+    
+    {% endfor %}
+    <button class="btn" type="submit" formaction="/user/{{ user.username }}/saveprofile">Save<i class="material-icons right">save</i></button>
+  </form>
+</div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+

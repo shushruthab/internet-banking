@@ -1,0 +1,25 @@
+{% extends "dashbase.html" %}
+{% block title %}{{ user.first_name }}| Dashboard{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="/static/dashboardstyle.css">
+  <link rel="stylesheet" href="/static/act.css">
+{% endblock %}
+{% block content %}
+{% include 'header.html' %}
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+        <div class="credit-card">
+          <div class="card-no">**** **** **** {{ act.account_no[12:] }}</div>
+          <span class="name">{{ user.first_name }} {{ user.last_name }}</span>
+          <span class="balance">Account Balance: ${{ '{:,.2f}'.format(act.account_balance) }}</span>
+          <div class="visa"></div>
+        </div>
+        <div class="button"><a href="/user/{{ user.username }}/txns" class="waves-effect waves-light btn-large">View Transactions</a></div>
+        
+      </div>
+    </div>
+</div>    
+{% endblock %}
+

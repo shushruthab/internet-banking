@@ -1,0 +1,144 @@
+/* Common to all pages within user account */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: black;
+    font-family: "Lato", sans-serif;
+    display: flex;
+    align-items: center;
+    color: #faf8f8;
+    justify-content: center;
+  }
+  
+  h2 {
+    font-size: 50px;
+    text-align: center;
+    color: #faf8f8;
+  }
+
+  input {
+    color: whitesmoke;
+  }
+
+.dashi {
+  transition: 0.5s;
+}
+
+.dashi:hover {
+  transform: translateY(10px);
+}
+  /* Dashboard page */
+
+  .cardfront {
+    display: inline-block;
+    position: relative;
+    margin: 10px;
+    -webkit-box-reflect: below 1px
+      linear-gradient(transparent, transparent, #00000050);
+    transition: 0.5s;  
+  }
+
+  .cardfront:hover {
+    transform: translateY(-50px);
+  }
+  
+  .cardfront span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+   .spanacc {
+    width: 180px;
+    height: 50px;
+    color: #faf8f8;
+    background-color: #008c9e;
+    font-size: 25px;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+  }
+
+  .spantrf {
+    width: 180px;
+    height: 50px;
+    color: #faf8f8;
+    background-color: #6fb40a;
+    font-size: 25px;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+  }
+  
+  .spanpur {
+    width: 180px;
+    height: 50px;
+    color: #faf8f8;
+    background-color: #c54800;
+    font-size: 25px;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+  }
+
+  .spanprof {
+    width: 180px;
+    height: 50px;
+    color: #faf8f8;
+    background-color: #22a568;
+    font-size: 25px;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+  }
+  
+  .spanacc1 {
+    height: 150px;
+    color: #faf8f8;
+    background-color: #00b2cb;
+    font-size: 90px;
+    font-weight: 700;
+  }
+  
+  .spantrf1 {
+    height: 150px;
+    color: #faf8f8;
+    background-color: #8ee80e;
+    font-size: 90px;
+    font-weight: 700;
+  }
+
+  .spanpur1 {
+    height: 150px;
+    color: #faf8f8;
+    background-color: #ff5d00;
+    font-size: 90px;
+    font-weight: 700;
+  }
+
+  .spanprof1 {
+    height: 150px;
+    color: #faf8f8;
+    background-color: #2ad587;
+    font-size: 90px;
+    font-weight: 700;
+  }
+ 
+  
+ 
+  
+  
+ 
+  

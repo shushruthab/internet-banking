@@ -1,0 +1,39 @@
+{% extends "dashbase.html" %}
+{% block title %}Transfer{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="/static/dashboardstyle.css">
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+      <div class="col s12">
+          <h2><a href="/user/{{ username }}" ><i class="dashi medium material-icons">home</i></a> SATOZ BANK <a href="/logout"><i class="medium material-icons dashi">power_settings_new</i></a></h2>
+      </div>
+  </div>
+  <div class="col s12 m5 l5">
+  <form method="POST">
+
+    {{ form.hidden_tag() }}
+    
+    {% for field in form
+      if field.widget.input_type != 'hidden' %}
+      <div class="input-field col s12">
+      {{ field.label }}
+      {{ field(class_="validate") }}
+    </div>
+      {% for error in field.errors %}
+      <span class="form-text text-danger">{{ error }}</span>
+      {% endfor %}
+    
+    {% endfor %}
+    <button class="btn" type="submit" formaction="/user/{{ username }}/transfer">Send<i class="material-icons right">send</i></button>
+  </form>
+</div>
+</div>
+
+{% endblock %}
+
+
+
+

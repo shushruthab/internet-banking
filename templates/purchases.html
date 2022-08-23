@@ -1,0 +1,35 @@
+{% extends "dashbase.html" %}
+{% block title %}Purchases{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="/static/purchases.css">
+{% endblock %}
+{% block content %}
+{% include 'header.html' %}
+<div class="row">
+    {% for purchase in purchases %}
+    <div class="col s12 m3 l3">
+        <div class="cardfront">
+            <div class="vendor">
+                <h4>{{ purchase.vendor }}</h4>
+            </div>
+            <div class="description">
+                <p>{{ purchase.description }}</p>
+            </div>    
+            <div class="amount">
+                <h5>${{ '{:,.2f}'.format(purchase.amount) }}</h5>
+            </div>
+            
+            <div class="approval">
+                <form>
+                <button formaction="/{{ purchase.id }}/del" class="red waves-effect waves-light btn-small decline">Decline</button>
+                <button formaction="/{{ purchase.id }}/approve" class="green waves-effect waves-light btn-small approve">Approve</button>
+            </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div> 
+{% endblock %}
+
+

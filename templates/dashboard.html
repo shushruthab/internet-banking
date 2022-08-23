@@ -1,0 +1,44 @@
+{% extends "dashbase.html" %}
+{% block title %}{{ user.first_name }}| Dashboard{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="/static/dashboardstyle.css">
+{% endblock %}
+{% block content %}
+{% include 'header.html' %}
+<div class="row">
+    <div class="col s12 m3 l3">
+        <div class="cardfront">
+            <a href="/user/{{ user.username }}/account">
+                <span class="spanacc">Account</span>
+                <span class="spanacc1"><i class="large material-icons">account_balance_wallet</i></span>
+            </a>
+        </div>
+    </div>
+    <div class="col s12 m3 l3">
+        <div class="cardfront">
+            <a href="/user/{{ user.username }}/transfer">
+                <span class="spantrf">Transfer</span>
+                <span class="spantrf1"><i class="large material-icons">call_made</i></span>
+            </a>
+        </div>
+    </div>
+    <div class="col s12 m3 l3">
+        <div class="cardfront">
+            <a href="/user/{{ user.username }}/purchases">
+                <span class="spanpur">Purchase</span>
+                <span class="spanpur1"><i class='large material-icons'>payment</i></span>
+            </a>
+        </div>
+    </div>
+    <div class="col s12 m3 l3">
+        <div class="cardfront">
+            <a href="/user/{{ user.username }}/profile">
+                <span class="spanprof">Profile</span>
+                <span class="spanprof1"><i class="large material-icons">perm_identity</i></span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

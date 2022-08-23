@@ -1,0 +1,38 @@
+{% extends "dashbase.html" %}
+{% block title %}{{ user.first_name }}| Dashboard{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="/static/dashboardstyle.css">
+  <link rel="stylesheet" href="/static/act.css">
+{% endblock %}
+{% block content %}
+{% include 'header.html' %}
+<h5><b>Posted Transactions</b></h5> 
+<table class="white-text highlight">
+    <thead>
+      <tr>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Amount</th>
+          
+      </tr>
+    </thead>
+    
+    <tbody>
+      {% for txn in txns %}  
+      <tr>
+        <td>{{ txn.description }}</td>
+        <td>{% if txn.recipient == act.account_no %}
+            Deposit
+            {% else %}
+            Withdrawal
+            {% endif %}</td>
+        <td>{{ txn.transaction_date.strftime("%Y/%m/%d") }}</td>
+        <td>${{ '{:,.2f}'.format(txn.amount) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
