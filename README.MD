@@ -1,5 +1,6 @@
 ## Satoz Bank Internet Banking App
 Full-stack internet banking app.
+
 ![Final App](/static/demo.gif)
 
 This project uses the following technologies:
@@ -40,4 +41,4 @@ To test the app, use any of the following credentials.
 ## Simulate Purchases
 To simulate a purchase, send a post request to `http://localhost:5000/<username>/purchase` using a tool like insomnia. Following is an example of a sample request.
 
-image.png
+![Final App](/static/purchase_demo.png)
