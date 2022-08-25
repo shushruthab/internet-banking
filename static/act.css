@@ -1,11 +1,9 @@
 /* Txns page */
 h5 {
-  text-align: center;
+  text-align: center; 
 }
 
-.fixed {
-  position: fixed;
-}
+
 /* Account page */
 
   .credit-card {
