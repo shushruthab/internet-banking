@@ -62,7 +62,13 @@ def registration():
     else:
         return render_template("register.html", form=form)
 
-# ------------Dashboard-----------------------------------------------
+#  -------Logout--------------------------------
+@app.route('/logout')
+def logout():
+    session.pop("username")
+    return redirect('/')
+
+# ----------------------------Dashboard----------------------------------
 
 @app.route('/user/<username>')
 def userdashboard(username):
@@ -117,115 +123,6 @@ def viewtxn(username):
 
     return render_template("txns.html", txns=txns, user=user, act=act)
 
-# -----------------------Transfer------------------------------
-
-@app.route('/user/<username>/transfer', methods=["GET", "POST"])
-def transfermoney(username):
-    form = TransferForm()
-    if "username" not in session:
-        flash("Please log in to your account")
-        return redirect('/login')
-
-    # Get data associated with transferring funds
-    if form.validate_on_submit():
-        email = form.email.data
-        amount = form.amount.data
-
-        username=session["username"]
-        rec_email = User.query.filter_by(email=email).first()
-        if rec_email:
-                sendr = User.query.filter_by(username=username).first().accounts[0]
-                receivr = rec_email.accounts[0]
-                
-                new_txn = Transaction(amount=amount,
-                                    recipient=receivr.account_no,
-                                    sender=sendr.account_no,
-                                    description="Intrabank Transfer")
-
-                account1 = Account.query.get(sendr.account_no)
-                account2 = Account.query.get(receivr.account_no)
-                account1.account_balance = account1.account_balance - amount
-                account2.account_balance = account2.account_balance + amount
-
-                db.session.add(account1)
-                db.session.add(account2)
-                db.session.add(new_txn)
-                db.session.commit()
-                return redirect(f"/user/{username}")
-        else:
-                form.username.errors = ["Invalid recipient email address"]
-
-    return render_template("transfer.html", form=form, username=username)
-
-
-# ----------------- Purchase------------------------------------
-# send a post request to this link using postman, insomnia or a similar tool
-
-@app.route('/<username>/purchase', methods=["POST"])
-def listenpurchases(username):
-    user = User.query.filter_by(username=username).first()
-    data = request.json
-
-    user_id = user.id
-    if (data.get('vendor')):
-        vendor = data.get('vendor')
-    else:
-        return "Vendor is required"
-    if (data.get('amount')):
-        amount = data.get('amount')
-    else:
-        return "Amount is required"
-    if (data.get('description')):
-        description = data.get('description')
-    else:
-        return "Enter a description of upto 100 characters"
-
-    new_purchase = Purchase(user_id=user_id,
-                            vendor=vendor,
-                            amount=amount,
-                            description=description)
-    db.session.add(new_purchase)
-    db.session.commit()
-
-    return f"Request to purchase {vendor} for a price of {amount} has been sent to the buyer"
-
-@app.route('/user/<username>/purchases')
-def showpurchaserequests(username):
-    user = User.query.filter_by(username=username).first()
-    purchases = Purchase.query.filter_by(user_id=user.id).all()
-    return render_template("purchases.html", user=user, purchases=purchases)
-
-@app.route('/<purchaseid>/del')
-def delpurchases(purchaseid):
-    if "username" not in session:
-        flash("Please log in to your account")
-        return redirect('/login')
-
-    username =session["username"] 
-    purchase = Purchase.query.get(purchaseid)
-    db.session.delete(purchase)
-    db.session.commit()
-    return redirect(f"/user/{username}/purchases")
-
-@app.route('/<purchaseid>/approve')
-def approvepurchases(purchaseid):
-    if "username" not in session:
-        flash("Please log in to your account")
-        return redirect('/login')
-
-    username =session["username"] 
-    user = User.query.filter_by(username=username).first()
-    account = user.accounts[0]
-    purchase = Purchase.query.get(purchaseid)
-    new_txn = Transaction(amount=purchase.amount,
-                          sender=account.account_no,
-                          description=purchase.description + purchase.vendor)
-    db.session.add(new_txn)
-    db.session.commit()  
-    account.account_balance = account.account_balance - purchase.amount
-    db.session.delete(purchase)
-    db.session.commit()  
-    return redirect(f"/user/{username}/purchases")
 
 # -------Dashboard Profile---------------
 @app.route('/<username>/createprofile')
@@ -291,8 +188,124 @@ def saveprofile(username):
     db.session.commit()
     return redirect(f"/user/{username}/profile")
 
-#  -------Logout--------------------------------
-@app.route('/logout')
-def logout():
-    session.pop("username")
-    return redirect('/')
+# -----------------------Transfer------------------------------
+
+@app.route('/user/<username>/transfer', methods=["GET", "POST"])
+def transfermoney(username):
+    form = TransferForm()
+    if "username" not in session:
+        flash("Please log in to your account")
+        return redirect('/login')
+
+    # Get data associated with transferring funds
+    if form.validate_on_submit():
+        email = form.email.data
+        amount = form.amount.data
+
+        username=session["username"]
+        rec_email = User.query.filter_by(email=email).first()
+        if rec_email:
+                sendr = User.query.filter_by(username=username).first().accounts[0]
+                receivr = rec_email.accounts[0]
+                
+                new_txn = Transaction(amount=amount,
+                                    recipient=receivr.account_no,
+                                    sender=sendr.account_no,
+                                    description="Intrabank Transfer")
+
+                account1 = Account.query.get(sendr.account_no)
+                account2 = Account.query.get(receivr.account_no)
+                account1.account_balance = account1.account_balance - amount
+                account2.account_balance = account2.account_balance + amount
+
+                db.session.add(account1)
+                db.session.add(account2)
+                db.session.add(new_txn)
+                db.session.commit()
+                return redirect(f"/user/{username}")
+        else:
+                form.username.errors = ["Invalid recipient email address"]
+
+    return render_template("transfer.html", form=form, username=username)
+
+
+# ----------------- Purchase------------------------------------
+# send a post request to this link using postman, insomnia or a similar tool
+
+@app.route('/user/<username>/purchases')
+def showpurchaserequests(username):
+    if "username" not in session:
+        flash("Please log in to your account")
+        return redirect('/login')
+        
+    user = User.query.filter_by(username=username).first()
+    purchases = Purchase.query.filter_by(user_id=user.id).all()
+    return render_template("purchases.html", user=user, purchases=purchases)
+
+@app.route('/purchase', methods=["POST"])
+def listenpurchases():
+    
+    data = request.json
+    if (data.get('username')):
+        username = data.get('username')
+        user = User.query.filter_by(username=username).first()
+        user_id = user.id
+    else:
+        return "username is required"    
+    
+    if (data.get('vendor')):
+        vendor = data.get('vendor')
+    else:
+        return "Vendor is required"
+
+    if (data.get('amount')):
+        amount = data.get('amount')
+    else:
+        return "Amount is required"
+
+    if (data.get('description')):
+        description = data.get('description')
+    else:
+        return "Enter a description of upto 100 characters"
+
+    new_purchase = Purchase(user_id=user_id,
+                            vendor=vendor,
+                            amount=amount,
+                            description=description)
+    db.session.add(new_purchase)
+    db.session.commit()
+
+    return f"Request to purchase {vendor} for a price of {amount} has been sent to the buyer"
+
+@app.route('/<purchaseid>/approve')
+def approvepurchases(purchaseid):
+    if "username" not in session:
+        flash("Please log in to your account")
+        return redirect('/login')
+
+    username =session["username"] 
+    user = User.query.filter_by(username=username).first()
+    account = user.accounts[0]
+    purchase = Purchase.query.get(purchaseid)
+    new_txn = Transaction(amount=purchase.amount,
+                          sender=account.account_no,
+                          description=purchase.description + purchase.vendor)
+    db.session.add(new_txn)
+    db.session.commit()  
+    account.account_balance = account.account_balance - purchase.amount
+    db.session.delete(purchase)
+    db.session.commit()  
+    return redirect(f"/user/{username}/purchases")
+
+@app.route('/<purchaseid>/del')
+def delpurchases(purchaseid):
+    if "username" not in session:
+        flash("Please log in to your account")
+        return redirect('/login')
+
+    username =session["username"] 
+    purchase = Purchase.query.get(purchaseid)
+    db.session.delete(purchase)
+    db.session.commit()
+    return redirect(f"/user/{username}/purchases")
+
