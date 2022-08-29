@@ -106,8 +106,12 @@ class Account(db.Model):
         p = self
         return f"<Account Accountno={p.account_no} Account_user_id={p.user_id}"
 
-    account_no = db.Column(db.String(16),
+    id = db.Column(db.Integer,
                     primary_key=True,
+                    autoincrement=True,
+                    nullable=False)    
+
+    account_no = db.Column(db.String(16),
                     unique=True,
                     nullable=False)
     
