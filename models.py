@@ -151,7 +151,7 @@ class Transaction(db.Model):
 
     def __repr__(self):
         p = self
-        return f"<Transaction id={p.id} Transaction_amount={p.amount} Transaction_success={p.success}"
+        return f"<Transaction id={p.id} Transaction_amount={p.amount}"
 
     id = db.Column(db.Integer,
                     primary_key=True,
