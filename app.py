@@ -23,6 +23,7 @@ toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 
+db.drop_all()
 db.create_all()
 
 # ------Homepage-----------------------------
@@ -218,8 +219,8 @@ def transfermoney(username):
                                     sender=sendr.account_no,
                                     description="Intrabank Transfer")
 
-                account1 = Account.query.get(sendr.account_no)
-                account2 = Account.query.get(receivr.account_no)
+                account1 = Account.query.get(sendr.id)
+                account2 = Account.query.get(receivr.id)
                 account1.account_balance = account1.account_balance - amount
                 account2.account_balance = account2.account_balance + amount
 

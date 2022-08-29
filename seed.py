@@ -67,6 +67,20 @@ addtxnsdb(1, salary1)
 addtxnsdb(2, salary2)
 addtxnsdb(3, salary3)
 
+# Update account balances
+acnt_1 = Account.query.get(1)
+acnt_2 = Account.query.get(2)
+acnt_3 = Account.query.get(3)
+
+acnt_1.account_balance = 24000
+acnt_2.account_balance = 30000
+acnt_3.account_balance = 36000
+
+db.session.add(acnt_1)
+db.session.add(acnt_2)
+db.session.add(acnt_3)
+db.session.commit()
+
 #Purchases
 vendors = ['Apple', 'Samsung', 'Nike', 'Adidas', 'Godaddy', 'Loblaws']
 amt = [4200.01, 1450.36, 244.99, 145.69, 25.99, 45.11]
