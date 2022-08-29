@@ -4,13 +4,14 @@ from models import connect_db, db, User, Profile, Account, Transaction, Purchase
 from forms import RegisterForm, LoginForm, TransferForm, ProfileForm
 from sqlalchemy import or_
 from sqlalchemy import desc
+import os
 
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///satozbank"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
-app.config["SECRET_KEY"] = "abc123"
+app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY', 'abc123')
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 
