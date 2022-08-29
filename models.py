@@ -91,12 +91,12 @@ class Profile(db.Model):
     user = db.relationship('User', backref="profile")
 
     @classmethod
-    def createprof(cls, userid):
+    def createprof(cls, userid,company="XYZ", role="xyz", address="xyz"):
         prof = Profile()
-        return cls(company="XYZ",
+        return cls(company=company,
                 user_id=userid, 
-                role="xyz",
-                address="xyz")
+                role=role,
+                address=address)
 
 class Account(db.Model):
     """Create Accounts associated with username"""
