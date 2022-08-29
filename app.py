@@ -5,10 +5,14 @@ from forms import RegisterForm, LoginForm, TransferForm, ProfileForm
 from sqlalchemy import or_
 from sqlalchemy import desc
 import os
+import re
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL','postgresql:///satozbank')
+uri = os.environ.get('DATABASE_URL', 'postgresql:///satozbank')
+if uri.startswith("postgres://"):
+ uri = uri.replace("postgres://", "postgresql://", 1)
+app.config["SQLALCHEMY_DATABASE_URI"] = uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY', 'abc123')
