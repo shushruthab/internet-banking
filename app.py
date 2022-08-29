@@ -229,7 +229,7 @@ def transfermoney(username):
                 db.session.commit()
                 return redirect(f"/user/{username}")
         else:
-                form.username.errors = ["Invalid recipient email address"]
+                form.email.errors = ["Invalid recipient email address"]
 
     return render_template("transfer.html", form=form, username=username)
 
