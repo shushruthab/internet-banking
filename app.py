@@ -3,6 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Profile, Account, Transaction, Purchase
 from forms import RegisterForm, LoginForm, TransferForm, ProfileForm
 from sqlalchemy import or_
+from sqlalchemy import desc
 
 
 app = Flask(__name__)
@@ -119,7 +120,7 @@ def viewtxn(username):
     username=session["username"]
     user = User.query.filter_by(username=username).first()
     act = user.accounts[0]
-    txns = Transaction.query.filter(or_(Transaction.sender == act.account_no, Transaction.recipient == act.account_no)).all()
+    txns = Transaction.query.filter(or_(Transaction.sender == act.account_no, Transaction.recipient == act.account_no)).order_by(desc(Transaction.id)).all()
 
     return render_template("txns.html", txns=txns, user=user, act=act)
 

@@ -6,33 +6,38 @@
   <link rel="stylesheet" href="/static/act.css">
 {% endblock %}
 {% block content %}
-{% include 'header.html' %}
-<h5><b>Posted Transactions</b></h5> 
-<table class="white-text highlight">
-    <thead>
-      <tr>
-          <th>Description</th>
-          <th>Type</th>
-          <th>Date</th>
-          <th>Amount</th>
-          
-      </tr>
-    </thead>
-    
-    <tbody>
-      {% for txn in txns %}  
-      <tr>
-        <td>{{ txn.description }}</td>
-        <td>{% if txn.recipient == act.account_no %}
-            Deposit
-            {% else %}
-            Withdrawal
-            {% endif %}</td>
-        <td>{{ txn.transaction_date.strftime("%Y/%m/%d") }}</td>
-        <td>${{ '{:,.2f}'.format(txn.amount) }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div class="container">
+  <div class="row fixed">
+      <div class="col s12">
+          <h2><a href="/user/{{ user.username }}" ><i class="medium material-icons dashi">home</i></a> SATOZ BANK <a href="/logout"><i class="medium material-icons dashi">power_settings_new</i></a></h2>
+      </div>
+  </div>
+    <h5><b>Posted Transactions</b></h5> 
+    <table class="white-text highlight">
+        <thead>
+          <tr>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Amount</th>
+              
+          </tr>
+        </thead>
+        
+        <tbody>
+          {% for txn in txns %}  
+          <tr>
+            <td>{{ txn.description }}</td>
+            <td>{% if txn.recipient == act.account_no %}
+                Deposit
+                {% else %}
+                Withdrawal
+                {% endif %}</td>
+            <td>{{ txn.transaction_date.strftime("%Y/%m/%d") }}</td>
+            <td>${{ '{:,.2f}'.format(txn.amount) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
 {% endblock %}

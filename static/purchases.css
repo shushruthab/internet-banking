@@ -12,7 +12,7 @@ h4 {
   body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
     background-color: black;
     font-family: "Lato", sans-serif;
     display: flex;
@@ -32,7 +32,7 @@ h4 {
     display: inline-block;
     align-items: center;
     position: relative;
-    margin: 10px;
+    margin: 20px;
     background-color: lavender;
     transition: 0.5s; 
     width: 200px;

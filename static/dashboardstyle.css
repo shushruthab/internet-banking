@@ -9,7 +9,7 @@
   body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
     background-color: black;
     font-family: "Lato", sans-serif;
     display: flex;
@@ -22,6 +22,7 @@
     font-size: 50px;
     text-align: center;
     color: #faf8f8;
+    z-index: 1;
   }
 
   input {
